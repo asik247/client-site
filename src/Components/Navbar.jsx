@@ -1,9 +1,20 @@
-import React from "react";
+import React, { use } from "react";
 import { NavLink } from "react-router";
 // import from "../Components/Style.css"
 import "../Components/Style.css";
+import { AuthContext } from "../Context/AuthContex";
 
 const Navbar = () => {
+  const {user,singOutUser} = use(AuthContext)
+  const handleSingOut = ()=>{
+    singOutUser()
+    .then(result=>{
+      console.log(result)
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+  }
    const links = <>
    <li><NavLink to={"/"} className={({ isActive }) => isActive ? "active-link" : ""} >Home</NavLink></li>
    <li><NavLink to={"/login"}  className={({ isActive }) => isActive ? "active-link" : ""}>Login</NavLink></li>
@@ -46,7 +57,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">SingIn</a>
+       {user?<a onClick={handleSingOut} className="btn">SingOut</a>:<a className="btn">SingIn</a>}
       </div>
     </div>
   );

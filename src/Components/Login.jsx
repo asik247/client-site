@@ -1,11 +1,21 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../Context/AuthContex";
 
 const Login = () => {
+  const {singInUser} = use(AuthContext)
+ 
   const handleLogin = (e) => {
     e.preventDefault();
     const Email = e.target.email.value;
     const Password = e.target.password.value;
     console.log(Email,Password)
+    singInUser(Email,Password)
+    .then(result=>{
+      console.log(result.user)
+    })
+    .catch(error=>{
+      console.log(error)
+    })
   };
   return (
     <form onSubmit={handleLogin}>
